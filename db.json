@@ -1,19 +1,19 @@
 {
-  "posts": [
+  "todos": [
     {
       "id": 1,
-      "title": "json-server",
-      "author": "typicode"
-    }
-  ],
-  "comments": [
+      "content": "code",
+      "state": true
+    },
     {
-      "id": 1,
-      "body": "some comment",
-      "postId": 1
+      "content": "hello",
+      "state": false,
+      "id": 2
+    },
+    {
+      "content": "hello",
+      "state": false,
+      "id": 3
     }
-  ],
-  "profile": {
-    "name": "typicode"
-  }
+  ]
 }

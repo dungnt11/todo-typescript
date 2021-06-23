@@ -1,25 +1,39 @@
 import * as React from 'react';
+import axios from './helper/axios';
+import { TTodos } from './type';
 
-type TProps = { onAddTodo: (todo: string) => void };
+type TProps = { onAddTodo: (todo: TTodos) => void };
 
 type TState = {
   input: string,
+  loading: boolean,
 };
 
 class InputTodo extends React.Component<TProps, TState> {
   constructor(props: TProps) {
     super(props);
-    this.state = { input: '' };
+    this.state = { input: '', loading: false };
   }
 
   setInput(input: string) {
     this.setState({ input });
   }
 
-  onAddTodoFn() {
-    const { input } = this.state;
-    this.props.onAddTodo(input);
-    this.setInput('');
+  async onAddTodoFn() {
+    try {
+      const { input } = this.state;
+      this.setState({ loading: true });
+      const { data } = await axios.post<TTodos>('/todos', {
+        content: input,
+        state: false,
+      });
+      this.props.onAddTodo(data);
+      this.setInput('');
+    } catch (error) {
+      
+    } finally {
+      this.setState({ loading: false });
+    }
   }
 
   onChangeFn(event: React.ChangeEvent<HTMLInputElement>) {
@@ -27,7 +41,7 @@ class InputTodo extends React.Component<TProps, TState> {
   }
 
   render() {
-    const { input } = this.state;
+    const { input, loading } = this.state;
     return (
       <>
         <input
@@ -40,7 +54,7 @@ class InputTodo extends React.Component<TProps, TState> {
           type="button"
           onClick={() => this.onAddTodoFn()}
         >
-          Add
+          {loading ? <>Loading..</> : 'Add'}
         </button>
       </>
     )

@@ -1,1 +1,5 @@
-export type TTodos = { content: string, state: boolean };
+export type TTodos = {
+  content: string,
+  state: boolean,
+  id: number,
+};
