@@ -2,7 +2,8 @@ import * as React from 'react';
 import { InputTodo } from '../InputTodo';
 import { ListTodo } from '../ListTodo';
 import { TTodos } from '../type';
-import axios from '../helper/axios';
+// import axios from '../helper/axios';
+import { fetchInstance } from '../helper/configFetch';
 import styles from './app.module.scss';
 
 const App: React.FC = () => {
@@ -13,7 +14,7 @@ const App: React.FC = () => {
     (async () => {
       try {
         setLoading(true);
-        const { data } = await axios.get<TTodos[]>('/todos');
+        const { data } = await fetchInstance.get<TTodos[]>('/todos');
         setTodos(data);
       } catch (error) {
         console.log(error);
